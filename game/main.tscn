@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cs0xulggeboo7"]
+
+[ext_resource type="Script" uid="uid://dsp2n46htcce7" path="res://main.gd" id="1_ig7tw"]
+
+[node name="Main" type="Control" unique_id=764680535]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ig7tw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1572539020]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.5
+offset_top = -42.5
+offset_right = 97.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=1274123334]
+layout_mode = 2
+text = "AI Fantasy RPG"
+
+[node name="DecisionLabel" type="Label" parent="VBoxContainer" unique_id=541602560]
+layout_mode = 2
+text = "Waiting for shopkeeper..."
+
+[node name="AskButton" type="Button" parent="VBoxContainer" unique_id=1169247689]
+layout_mode = 2
+text = "Ask Shopkeeper"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=486467811]

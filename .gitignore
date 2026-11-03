@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
+
+# Godot generated files
+.godot/
+
+# API secrets
+.env
+.env.*
+!.env.example
