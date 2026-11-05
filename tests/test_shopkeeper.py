@@ -35,8 +35,50 @@ def test_shopkeeper_restock():
 def test_shopkeeper_sell():
     response = client.post(
         "/npc/decide",
-        json={"energy": 80, "inventory": 10, "gold": 0}
+        json={"energy": 80, "inventory": 10, "gold": 0, "customers": 3}
     )
     assert response.json()["decision"] == (
         "Selling items to customers"
     )
+
+def test_shopkeeper_rests_at_new_threshold():
+    response = client.post(
+        "/npc/decide",
+        json={
+            "energy": 35,
+            "inventory": 10,
+            "gold": 100
+        }
+    )
+
+    assert response.status_code == 200
+    assert response.json()["decision"] == "Resting to recover energy"
+
+
+def test_shopkeeper_at_exact_energy_threshold():
+    response = client.post(
+        "/npc/decide",
+        json={
+            "energy": 40,
+            "inventory": 10,
+            "gold": 100,
+            "customers": 3
+        }
+    )
+
+    assert response.status_code == 200
+    assert response.json()["decision"] == "Selling items to customers"
+
+def test_shopkeeper_idle():
+    response = client.post(
+        "/npc/decide",
+        json={
+            "energy": 80,
+            "inventory": 10,
+            "gold": 100,
+            "customers": 0
+        }
+    )
+
+    assert response.status_code == 200
+    assert response.json()["decision"] == "Waiting for customers"
