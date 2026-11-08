@@ -1,6 +1,8 @@
 
 from fastapi import FastAPI
 from pydantic import BaseModel
+from ai.decision import decide_shopkeeper
+
 
 app = FastAPI(title="AI Fantasy RPG")
 
@@ -19,20 +21,12 @@ def health():
 
 @app.post("/npc/decide")
 def decide(state: ShopkeeperState):
-    if state.energy < 40:
-        decision = "Resting to recover energy"
-    elif state.inventory < 3:
-        decision = "Restocking inventory"
-    elif state.customers == 0:
-        decision = "Waiting for customers"
-    else:
-        decision = "Selling items to customers"
+    decision = decide_shopkeeper(
+    energy=state.energy,
+    inventory=state.inventory,
+    customers=state.customers
+)
 
 
-    return {
-        "npc": "Shopkeeper",
-        "decision": decision,
-        "energy": state.energy,
-        "inventory": state.inventory,
-        "gold": state.gold
-    }
+
+    return {"decision": decision}
