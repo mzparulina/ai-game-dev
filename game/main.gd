@@ -20,7 +20,8 @@ func ask_shopkeeper() -> void:
 	var npc_state = {
 		"energy": 80,
 		"inventory": 10,
-		"gold": 0
+		"gold": 0,
+		"customers": 0
 	}
 
 	var headers = ["Content-Type: application/json"]
@@ -49,9 +50,19 @@ func _on_request_completed(
 		decision_label.text = "Connection error: " + str(result)
 		return
 
+	
 	if response_code != 200:
-		decision_label.text = "API error: " + str(response_code)
+		match response_code:
+			404:
+				decision_label.text = "AI endpoint not found."
+			422:
+				decision_label.text = "Invalid NPC data."
+			500:
+				decision_label.text = "AI server encountered an error."
+			_:
+				decision_label.text = "API error: " + str(response_code)
 		return
+
 
 	var data = JSON.parse_string(body.get_string_from_utf8())
 
